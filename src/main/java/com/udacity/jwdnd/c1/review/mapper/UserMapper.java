@@ -2,8 +2,10 @@ package com.udacity.jwdnd.c1.review.mapper;
 
 import com.udacity.jwdnd.c1.review.model.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserMapper {
     @Select("SELECT * FROM users WHERE username = #{username}")
     User getUser(String username);

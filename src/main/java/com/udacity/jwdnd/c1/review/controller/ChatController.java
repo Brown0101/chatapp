@@ -20,7 +20,7 @@ public class ChatController {
 
     @GetMapping
     public String getChatPage(ChatForm chatForm, Model model) {
-        model.addAttribute("chatMessages", this.messageService.getChatMessages());
+        model.addAttribute("messages", this.messageService.getChatMessages());
         return "chat";
     }
 

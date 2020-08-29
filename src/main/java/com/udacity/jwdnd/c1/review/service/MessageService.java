@@ -13,10 +13,10 @@ import java.util.List;
 public class MessageService {
 
     private List<ChatMessage> chatMessages;
-    private MessageMapper messageMapper;
+    private final MessageMapper messageMapper;
 
-    public MessageService() {
-
+    public MessageService(MessageMapper messageMapper) {
+        this.messageMapper = messageMapper;
     }
 
     @PostConstruct
@@ -38,11 +38,14 @@ public class MessageService {
                 messageMapper.insertMessage(chatForm.getUsername(), chatForm.getMessageText().toLowerCase());
                 break;
         }
-        this.chatMessages.add(messageMapper.getMessage(chatForm.getUsername()));
+//        this.chatMessages.add(messageMapper.getMessage(chatForm.getUsername()));
     }
 
+//    public List<ChatMessage> getChatMessages() {
+//        return new ArrayList<>(this.chatMessages);
+//    }
     public List<ChatMessage> getChatMessages() {
-        return new ArrayList<>(this.chatMessages);
+        return messageMapper.getMessages();
     }
 
 }

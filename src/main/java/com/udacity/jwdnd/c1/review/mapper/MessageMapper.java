@@ -5,13 +5,21 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Mapper
+@Repository
 public interface MessageMapper {
+
+    @Select("SELECT * FROM messages")
+    List<ChatMessage> getMessages();
+
     @Select("SELECT * FROM messages WHERE username = #{username}")
     ChatMessage getMessage(String username);
 
     @Insert("INSERT into messages(username, messageText) VALUES(#{username}, #{messageText})")
-    @Options(useGeneratedKeys = true, keyProperty = "messageId")
-    ChatMessage insertMessage(String username, String messageText);
+    @Options(useGeneratedKeys = true)
+    void insertMessage(String username, String messageText);
 }
