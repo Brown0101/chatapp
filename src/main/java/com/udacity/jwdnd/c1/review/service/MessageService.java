@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    private List<ChatMessage> chatMessages;
     private final MessageMapper messageMapper;
 
     public MessageService(MessageMapper messageMapper) {
@@ -20,30 +19,27 @@ public class MessageService {
     }
 
     @PostConstruct
-    public void postContruct() {
-        this.chatMessages = new ArrayList<>();
+    public void postConstruct() {
+        System.out.println("Creating Message Service bean.");
     }
 
     public void addMessage(ChatForm chatForm) {
+        ChatMessage newMessage = new ChatMessage();
+        newMessage.setUsername(chatForm.getUsername());
         switch (chatForm.getMessageType()) {
             case "Say":
-                System.out.println(chatForm.getMessageText());
-                System.out.println(chatForm.getUsername());
-                messageMapper.insertMessage(chatForm.getUsername(), chatForm.getMessageText());
+                newMessage.setMessageText(chatForm.getMessageText());
                 break;
             case "Shout":
-                messageMapper.insertMessage(chatForm.getUsername(), chatForm.getMessageText().toUpperCase());
+                newMessage.setMessageText(chatForm.getMessageText().toUpperCase());
                 break;
             case "Whisper":
-                messageMapper.insertMessage(chatForm.getUsername(), chatForm.getMessageText().toLowerCase());
+                newMessage.setMessageText(chatForm.getMessageText().toLowerCase());
                 break;
         }
-//        this.chatMessages.add(messageMapper.getMessage(chatForm.getUsername()));
+        messageMapper.insertMessage(newMessage);
     }
 
-//    public List<ChatMessage> getChatMessages() {
-//        return new ArrayList<>(this.chatMessages);
-//    }
     public List<ChatMessage> getChatMessages() {
         return messageMapper.getMessages();
     }

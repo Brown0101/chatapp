@@ -16,10 +16,11 @@ public interface MessageMapper {
     @Select("SELECT * FROM messages")
     List<ChatMessage> getMessages();
 
+    // Not used but could for all messsages by a single user.
     @Select("SELECT * FROM messages WHERE username = #{username}")
     ChatMessage getMessage(String username);
 
     @Insert("INSERT into messages(username, messageText) VALUES(#{username}, #{messageText})")
-    @Options(useGeneratedKeys = true)
-    void insertMessage(String username, String messageText);
+    @Options(useGeneratedKeys = true, keyProperty = "messageId")
+    int insertMessage(ChatMessage messageText);
 }
