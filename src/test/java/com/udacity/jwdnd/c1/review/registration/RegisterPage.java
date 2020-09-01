@@ -1,6 +1,5 @@
-package com.udacity.jwdnd.c1.review;
+package com.udacity.jwdnd.c1.review.registration;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,17 +10,17 @@ public class RegisterPage {
     @FindBy(id = "signup-link")
     private WebElement signupLink;
 
-    @FindBy(id = "inputFirstName")
-    private WebElement inputFirstName;
+    @FindBy(name = "firstName")
+    private WebElement firstName;
 
-    @FindBy(id = "inputLastName")
-    private WebElement inputLastName;
+    @FindBy(name = "lastName")
+    private WebElement lastName;
 
-    @FindBy(id = "inputUsername")
-    private WebElement inputUsername;
+    @FindBy(name= "username")
+    private WebElement username;
 
-    @FindBy(id = "inputPassword")
-    private WebElement inputPassword;
+    @FindBy(name = "password")
+    private WebElement password;
 
     @FindBy(id = "submit-button")
     private WebElement submitButton;
@@ -39,11 +38,12 @@ public class RegisterPage {
 
     public void registerAccount() {
         try{
-            inputFirstName.wait(500);
-            inputFirstName.sendKeys("Frank");
-            inputLastName.sendKeys("Dukes");
-            inputUsername.sendKeys("fdukes");
-            inputPassword.sendKeys("superSecret");
+            Thread.sleep(2000);
+            System.out.println("Sending Keys to input fields!");
+            firstName.sendKeys("Frank");
+            lastName.sendKeys("Dukes");
+            username.sendKeys("fdukes");
+            password.sendKeys("superSecret");
             submitButton.click();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -52,11 +52,12 @@ public class RegisterPage {
 
     public Boolean getRegistrationResult() {
         try {
-            // TODO: Need to fix. Site goes to login and does not stay on sign up page.
-            // TODO: Page is unable to find success data on page.
-            successMsg.wait(5000);
-            successMsg.click();
-            return true;
+            Thread.sleep(5000);
+            if(successMsg.getText() != null) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
